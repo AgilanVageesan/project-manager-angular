@@ -1,0 +1,39 @@
+<div *ngIf="showAddUser">
+  <app-add-user [newUser]="currentUser" [isUpdate]="isUpdate" (newUserEvent)="AddUser($event)"
+    (isSubmit)="ShowUserList($event)"></app-add-user>
+</div>
+<div *ngIf="showUserList" >
+  <button type="button" class="btn btn-outline-dark" style="margin-top: 1%;margin-bottom: 1%;"
+    (click)="OnAddUserClick()">
+    Add User
+  </button>
+  <div style="overflow: scroll;max-height: 500px;">
+  <table class="table">
+      <thead class="thead-dark">
+        <tr style="text-align: center">
+          <th scope="col">Id</th>
+          <th scope="col">FirstName</th>
+          <th scope="col">LastName</th>
+          <th scope="col">Email</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align: center;" *ngFor="let user of users">
+          <th scope="row">{{ user.Id }}</th>
+          <td>{{ user.FirstName }}</td>
+          <td>{{ user.LastName }}</td>
+          <td>{{ user.Email }}</td>
+          <td>
+            <button type="button" (click)="UpdateUser(user)" style="margin-left: 2%" class="btn btn-info">
+              Update
+            </button>
+            <button type="button" (click)="DeleteUser(user)" style="margin-left: 2%" class="btn btn-danger">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+</div>
