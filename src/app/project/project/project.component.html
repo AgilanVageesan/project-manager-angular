@@ -1,1 +1,41 @@
-<p>project works!</p>
+<div *ngIf="showAddProject">
+    <app-add-project [newProject]="currentProject" [isUpdate]="isUpdate" (newProjectEvent)="AddProject($event)"
+    (isSubmit)="ShowProjectList($event)"></app-add-project>
+</div>
+<div *ngIf="showProjectList">
+    <button type="button" class="btn btn-outline-dark" style="margin-top: 1%; margin-bottom: 1%"
+        (click)="OnAddProjectClick()">
+        Add Project
+    </button>
+    <div style="overflow: scroll; max-height: 500px">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr style="text-align: center">
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">CreatedOn</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="text-align: center" *ngFor="let project of projects">
+                    <th scope="row">{{ project.Id }}</th>
+                    <td>{{ project.Name }}</td>
+                    <td>{{ project.Detail }}</td>
+                    <td>{{ project.CreatedOn }}</td>
+                    <td>
+                        <button type="button" (click)="UpdateProject(project)" style="margin-left: 2%"
+                            class="btn btn-info">
+                            Update
+                        </button>
+                        <button type="button" (click)="DeleteProject(project)" style="margin-left: 2%"
+                            class="btn btn-danger">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

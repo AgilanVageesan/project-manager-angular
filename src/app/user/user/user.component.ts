@@ -67,4 +67,3 @@ export class UserComponent implements OnInit {
     this.users.splice(userIndex, 1);
   }
 }
- 
