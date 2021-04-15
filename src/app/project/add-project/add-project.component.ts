@@ -7,6 +7,7 @@ import { Project } from '../project';
   styleUrls: ['./add-project.component.css'],
 })
 export class AddProjectComponent implements OnInit {
+  
   @Input() newProject: Project = {};
   @Input() isUpdate: boolean = false;
 

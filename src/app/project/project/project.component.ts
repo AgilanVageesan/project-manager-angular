@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Project } from '../project';
-import {AddProjectComponent} from '../add-project/add-project.component'
+import { Component, OnInit } from "@angular/core";
+import { Project } from "../project";
+import { AddProjectComponent } from "../add-project/add-project.component";
 
 @Component({
-  selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css'],
+  selector: "app-project",
+  templateUrl: "./project.component.html",
+  styleUrls: ["./project.component.css"],
 })
 export class ProjectComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
   showAddProject: boolean = false;
   showProjectList: boolean = true;
@@ -29,14 +29,20 @@ export class ProjectComponent implements OnInit {
 
   AddDummyProjects() {
     var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date + ' ' + time;
+    var date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    var time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date + " " + time;
     for (let i = 0; i < 25; i++) {
       const newProject: Project = {
         Id: i,
-        Name: 'Project ' + i,
-        Detail: 'details about project ' + i,
+        Name: "Project " + i,
+        Detail: "details about project " + i,
         CreatedOn: dateTime,
       };
       this.projects.push(newProject);
@@ -50,6 +56,7 @@ export class ProjectComponent implements OnInit {
       this.projects[ProjectIndex] = newProject;
     } else {
       newProject.Id = this.projects.length;
+      newProject.CreatedOn = new Date().toDateString();
       this.projects.push(newProject);
     }
     this.showAddProject = false;
