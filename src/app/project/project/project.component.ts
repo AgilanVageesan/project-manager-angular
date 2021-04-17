@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Project } from "../project";
 import { AddProjectComponent } from "../add-project/add-project.component";
+import { CommonDataService } from "src/app/common/common-data.service";
 
 @Component({
   selector: "app-project",
@@ -8,7 +9,8 @@ import { AddProjectComponent } from "../add-project/add-project.component";
   styleUrls: ["./project.component.css"],
 })
 export class ProjectComponent implements OnInit {
-  constructor() {}
+  constructor(private _commonDataService: CommonDataService) {
+  }
 
   showAddProject: boolean = false;
   showProjectList: boolean = true;
@@ -17,7 +19,8 @@ export class ProjectComponent implements OnInit {
   projects: Array<Project> = [];
   currentProject: Project = {};
   ngOnInit(): void {
-    this.AddDummyProjects();
+    this.AddDummyProjects(); 
+    this._commonDataService.ProjectDataModule.push(...this.projects)
   }
 
   OnAddProjectClick() {

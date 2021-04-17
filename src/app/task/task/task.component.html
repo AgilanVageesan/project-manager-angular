@@ -1,1 +1,46 @@
-<p>task works!</p>
+<div *ngIf="showAddTask">
+    <app-add-task [newTask]="currentTask" [isUpdate]="isUpdate" (newTaskEvent)="AddTask($event)" [projectDataList]="projectsList"
+    (isSubmit)="ShowTaskList($event)"></app-add-task>
+</div>
+<div *ngIf="showTaskList">
+
+    <button type="button" class="btn btn-outline-dark" style="margin-top: 1%; margin-bottom: 1%"
+        (click)="OnAddTaskClick()">
+        Add Task
+    </button>
+    <div style="overflow: scroll; max-height: 100vh">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr style="text-align: center">
+                    <th scope="col">Id</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">AssignedToUser</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">CreatedOn</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="text-align: center" *ngFor="let task of tasks">
+                    <th scope="row">{{ task.Id }}</th>
+                    <td>{{ task.Project }}</td>
+                    <td>{{ task.Detail }}</td>
+                    <td>{{ task.AssignedToUser }}</td>
+                    <td>{{ task.Status }}</td>
+                    <td>{{ task.CreatedOn }}</td>
+                    <td>
+                        <button type="button" (click)="UpdateTask(task)" style="margin-left: 2%"
+                            class="btn btn-info">
+                            Update
+                        </button>
+                        <button type="button" (click)="DeleteTask(task)" style="margin-left: 2%"
+                            class="btn btn-danger">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
