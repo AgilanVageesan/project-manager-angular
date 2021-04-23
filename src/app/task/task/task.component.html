@@ -1,6 +1,6 @@
 <div *ngIf="showAddTask">
     <app-add-task [newTask]="currentTask" [isUpdate]="isUpdate" (newTaskEvent)="AddTask($event)" [projectDataList]="projectsList"
-    (isSubmit)="ShowTaskList($event)"></app-add-task>
+    [userDataList]="usersList" (isSubmit)="ShowTaskList($event)"></app-add-task>
 </div>
 <div *ngIf="showTaskList">
 

@@ -1,23 +1,12 @@
 <div>
   <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Project Manager</a>
-    <label for="clock" id="clock" style="margin-left: auto;color: aliceblue;">{{myDate | date:'medium'}}</label>
+    <a class="navbar-brand" style="margin-left:auto" *ngIf="router != '/home'" href="#">Logout</a>
+    <!-- <app-header-home *ngIf="router != '/ur_route'"></app-header-home> //component I want hidden unless url /home -->
+
+    <!-- <label for="clock" id="clock" style="margin-left: auto;color: aliceblue;">{{myDate | date:'medium'}}</label> -->
   </nav>
 </div>
-<div style="display: flex;height: 100vh;">
-  <div style="width: 20%;background: #343b40;">
-    <div class="nav flex-column navbar-dark bg-dark nav-pills" id="v-pills-tab" role="tablist"
-      aria-orientation="vertical">
-      <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
-        aria-controls="v-pills-home" aria-selected="true" routerLink="/user" routerLinkActive="active">Users</a>
-      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
-        aria-controls="v-pills-messages" aria-selected="false" routerLink="/project"
-        routerLinkActive="active">Projects</a>
-      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
-        aria-controls="v-pills-settings" aria-selected="false" routerLink="/task" routerLinkActive="active">Tasks</a>
-    </div>
-  </div>
-  <div class="container-fluid" style="width: 100%;">
-    <router-outlet></router-outlet>
-  </div>
+<div >
+  <router-outlet></router-outlet>
 </div>

@@ -10,6 +10,7 @@ export class AddTaskComponent implements OnInit {
   @Input() newTask: Task = {};
   @Input() isUpdate: boolean = false;
   @Input() projectDataList: Array<any> = [];
+  @Input() userDataList: Array<any> = [];
 
   @Output() newTaskEvent = new EventEmitter<Task>();
   @Output() isSubmit = new EventEmitter<boolean>();

@@ -11,9 +11,10 @@ import { HomeComponent } from "./home/home.component";
 import { CommonModule, DatePipe } from "@angular/common";
 import { ProjectModule } from "./project/project.module";
 import { TaskModule } from "./task/task.module";
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent, NavbarComponent],
   imports: [
     BrowserModule,
     CommonModule,

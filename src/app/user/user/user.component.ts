@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonDataService } from 'src/app/common/common-data.service';
 import { User } from '../user';
 @Component({
   selector: 'app-user',
@@ -6,7 +7,7 @@ import { User } from '../user';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  constructor() {}
+  constructor(private _commonDataService: CommonDataService) {}
   showAddUser: boolean = false;
   showUserList: boolean = true;
   isUpdate: boolean = false;
@@ -15,6 +16,8 @@ export class UserComponent implements OnInit {
   currentUser: User = {};
   ngOnInit(): void {
     this.AddDummyUsers();
+    this._commonDataService.UserDataModule.push(...this.users)
+
   }
 
   OnAddUserClick() {

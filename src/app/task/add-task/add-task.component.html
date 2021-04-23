@@ -6,16 +6,15 @@
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Project</label>
                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                     <option selected>Choose...</option>
-                    <option *ngFor="let project of projectDataList" value="project.Id">{{ project.Name }}</option>
+                    <option *ngFor="let project of projectDataList" value="project.Id" name="project.Name"  [(ngModel)]="project.Name">{{ project.Name }}</option>
                 </select>
             </div>
             <div style="margin-bottom: 2%;">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Assigned To User</label>
                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                     <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option *ngFor="let user of userDataList" value="user.Id" name="user.FirstName" [(ngModel)]="user.FirstName">{{ user.FirstName }}</option>
+
                 </select>
             </div>
         </div>

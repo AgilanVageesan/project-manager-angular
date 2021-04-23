@@ -12,14 +12,16 @@ export class TaskComponent implements OnInit {
     // this._commonDataService.ProjectDataModule.subscribe(o => {
     //   this.projectsList.push(o);
     // });
-    this.projectsList=this._commonDataService.ProjectDataModule
-    console.log(this.projectsList)
+    this.projectsList=this._commonDataService.ProjectDataModule;
+    this.usersList=this._commonDataService.UserDataModule;
   }
 
   showAddTask: boolean = false;
   showTaskList: boolean = true;
   isUpdate: boolean = false;
   projectsList: Array<any> = [];
+  usersList: Array<any> = [];
+
   tasks: Array<Task> = [];
   currentTask: Task = {};
   ngOnInit(): void {
