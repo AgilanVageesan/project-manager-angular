@@ -12,11 +12,13 @@ export class AppComponent implements OnInit {
   router: string="";
   constructor(private _router: Router) {
     this.router = _router.url; 
+    
   }
 
 
   ngOnInit() {
-    this.clock();
+    console.log(this.router);
+    // this.clock();
   }
   clock() {
     setInterval(() => {
