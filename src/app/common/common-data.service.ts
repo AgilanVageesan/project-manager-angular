@@ -7,6 +7,7 @@ export class CommonDataService {
   SharingData: Subject<any> = new Subject<any>();
   ProjectDataModule: Array<Project> = [];
   UserDataModule: Array<User> = [];
+  isLogin:boolean=true;
   constructor() {}
 }
  

@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonDataService } from 'src/app/common/common-data.service';
-import { User } from '../user';
+import { Component, OnInit } from "@angular/core";
+import { CommonDataService } from "src/app/common/common-data.service";
+import { User } from "../user";
+import { UserService } from "../user.service";
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+  selector: "app-user",
+  templateUrl: "./user.component.html",
+  styleUrls: ["./user.component.css"],
 })
 export class UserComponent implements OnInit {
-  constructor(private _commonDataService: CommonDataService) {}
+  constructor(
+    private _commonDataService: CommonDataService,
+    private _userService: UserService
+  ) {}
   showAddUser: boolean = false;
   showUserList: boolean = true;
   isUpdate: boolean = false;
@@ -16,8 +20,14 @@ export class UserComponent implements OnInit {
   currentUser: User = {};
   ngOnInit(): void {
     this.AddDummyUsers();
-    this._commonDataService.UserDataModule.push(...this.users)
+    this._commonDataService.UserDataModule.push(...this.users);
+    this.GetAllUsers();
+  }
 
+  GetAllUsers() {
+    this._userService.getAll().subscribe((data: User[]) => {
+      this.users = data;
+    });
   }
 
   OnAddUserClick() {
@@ -31,9 +41,9 @@ export class UserComponent implements OnInit {
     for (let i = 0; i < 25; i++) {
       const newUser: User = {
         Id: i,
-        FirstName: 'User ' + i,
-        LastName: 'Name ' + i,
-        Email: 'user' + i + '@gmail.com',
+        FirstName: "User " + i,
+        LastName: "Name " + i,
+        Email: "user" + i + "@gmail.com",
       };
       this.users.push(newUser);
     }
@@ -50,6 +60,9 @@ export class UserComponent implements OnInit {
     }
     this.showAddUser = false;
     this.showUserList = true;
+    this._userService.create(newUser).subscribe((res) => {
+      console.log("Project created!");
+    });
   }
 
   ShowUserList(isSubmit: boolean) {
@@ -57,6 +70,11 @@ export class UserComponent implements OnInit {
       this.showAddUser = false;
       this.showUserList = true;
     }
+  }
+  GetProject(id: number) {
+    this._userService.getById(id).subscribe((data: User) => {
+      this.currentUser = data;
+    });
   }
 
   UpdateUser(user: User) {
@@ -66,7 +84,12 @@ export class UserComponent implements OnInit {
     this.isUpdate = true;
   }
   DeleteUser(user: User) {
-    const userIndex = this.users.indexOf(user);
-    this.users.splice(userIndex, 1);
+    if (user.Id) {
+      const ProjectIndex = this.users.indexOf(user);
+      this.users.splice(ProjectIndex, 1);
+      this._userService.delete(user.Id).subscribe((res) => {
+        console.log("User created!");
+      });
+    }
   }
 }

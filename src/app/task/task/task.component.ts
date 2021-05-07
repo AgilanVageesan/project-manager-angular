@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonDataService } from "src/app/common/common-data.service";
 import { Task } from "../task";
+import { TaskService } from "../task.service";
 
 @Component({
   selector: "app-task",
@@ -8,12 +9,12 @@ import { Task } from "../task";
   styleUrls: ["./task.component.css"],
 })
 export class TaskComponent implements OnInit {
-  constructor(private _commonDataService:CommonDataService) {
-    // this._commonDataService.ProjectDataModule.subscribe(o => {
-    //   this.projectsList.push(o);
-    // });
-    this.projectsList=this._commonDataService.ProjectDataModule;
-    this.usersList=this._commonDataService.UserDataModule;
+  constructor(
+    private _commonDataService: CommonDataService,
+    private _taskService: TaskService
+  ) {
+    this.projectsList = this._commonDataService.ProjectDataModule;
+    this.usersList = this._commonDataService.UserDataModule;
   }
 
   showAddTask: boolean = false;
@@ -26,8 +27,13 @@ export class TaskComponent implements OnInit {
   currentTask: Task = {};
   ngOnInit(): void {
     this.AddDummyTasks();
+    this.GetAllTasks();
   }
-
+  GetAllTasks() {
+    this._taskService.getAll().subscribe((data: Task[]) => {
+      this.tasks = data;
+    });
+  }
   OnAddTaskClick() {
     this.showAddTask = true;
     this.showTaskList = false;
@@ -49,7 +55,7 @@ export class TaskComponent implements OnInit {
     for (let i = 0; i < 25; i++) {
       const newTask: Task = {
         Id: i,
-        Project: "Project " + i,
+        Project: "Task " + i,
         Detail: "details about task " + i,
         CreatedOn: dateTime,
       };
@@ -69,6 +75,9 @@ export class TaskComponent implements OnInit {
     }
     this.showAddTask = false;
     this.showTaskList = true;
+    this._taskService.create(newTask).subscribe((res) => {
+      console.log("Task created!");
+    });
   }
 
   ShowTaskList(isSubmit: boolean) {
@@ -85,7 +94,12 @@ export class TaskComponent implements OnInit {
     this.isUpdate = true;
   }
   DeleteTask(Task: Task) {
-    const TaskIndex = this.tasks.indexOf(Task);
-    this.tasks.splice(TaskIndex, 1);
+    if (Task.Id) {
+      const TaskIndex = this.tasks.indexOf(Task);
+      this.tasks.splice(TaskIndex, 1);
+      this._taskService.delete(Task.Id).subscribe((res) => {
+        console.log("Product created!");
+      });
+    }
   }
 }

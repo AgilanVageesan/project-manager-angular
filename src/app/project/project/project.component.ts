@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Project } from "../project";
 import { AddProjectComponent } from "../add-project/add-project.component";
 import { CommonDataService } from "src/app/common/common-data.service";
+import { ProjectService } from "../project.service";
+import { Route, Router } from "@angular/router";
 
 @Component({
   selector: "app-project",
@@ -9,7 +11,10 @@ import { CommonDataService } from "src/app/common/common-data.service";
   styleUrls: ["./project.component.css"],
 })
 export class ProjectComponent implements OnInit {
-  constructor(private _commonDataService: CommonDataService) {
+  constructor(
+    private _commonDataService: CommonDataService,
+    private _projectService: ProjectService,
+  ) {
   }
 
   showAddProject: boolean = false;
@@ -19,8 +24,15 @@ export class ProjectComponent implements OnInit {
   projects: Array<Project> = [];
   currentProject: Project = {};
   ngOnInit(): void {
-    this.AddDummyProjects(); 
-    this._commonDataService.ProjectDataModule.push(...this.projects)
+    this.AddDummyProjects();
+    this._commonDataService.ProjectDataModule.push(...this.projects);
+    this.GetAllProjects()
+  }
+
+  GetAllProjects() {
+    this._projectService.getAll().subscribe((data: Project[]) => {
+      this.projects = data;
+    });
   }
 
   OnAddProjectClick() {
@@ -64,6 +76,9 @@ export class ProjectComponent implements OnInit {
     }
     this.showAddProject = false;
     this.showProjectList = true;
+    this._projectService.create(newProject).subscribe((res) => {
+      console.log("Project created!");
+    });
   }
 
   ShowProjectList(isSubmit: boolean) {
@@ -71,6 +86,11 @@ export class ProjectComponent implements OnInit {
       this.showAddProject = false;
       this.showProjectList = true;
     }
+  }
+  GetProject(id: number) {
+    this._projectService.getById(id).subscribe((data: Project) => {
+      this.currentProject = data;
+    });
   }
 
   UpdateProject(Project: Project) {
@@ -80,7 +100,12 @@ export class ProjectComponent implements OnInit {
     this.isUpdate = true;
   }
   DeleteProject(Project: Project) {
-    const ProjectIndex = this.projects.indexOf(Project);
-    this.projects.splice(ProjectIndex, 1);
+    if (Project.Id) {
+      const ProjectIndex = this.projects.indexOf(Project);
+      this.projects.splice(ProjectIndex, 1);
+      this._projectService.delete(Project.Id).subscribe((res) => {
+        console.log("Product created!");
+      });
+    }
   }
 }
